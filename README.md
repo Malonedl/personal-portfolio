@@ -4,6 +4,15 @@
 npm create astro@latest -- --template minimal
 ```
 
+## Quick start
+
+Install dependencies and run the dev server:
+
+```sh
+npm install
+npm run dev
+```
+
 > 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
 ## 🚀 Project Structure
