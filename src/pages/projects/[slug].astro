@@ -1,0 +1,232 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TagPill from "../../components/TagPill.astro";
+import MediaGallery from "../../components/MediaGallery.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+
+const formattedDate = data.date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={`${data.title} | Projects`} description={data.summary}>
+  <article class="content-shell case-study">
+    <header class="case-study-header">
+      <div>
+        <p class="eyebrow">Case Study</p>
+        <h1>{data.title}</h1>
+        <p class="summary">{data.summary}</p>
+      </div>
+      <div class="meta-card">
+        <div>
+          <h2>Project Snapshot</h2>
+          <dl>
+            <div>
+              <dt>Date</dt>
+              <dd>{formattedDate}</dd>
+            </div>
+            <div>
+              <dt>Role</dt>
+              <dd>{data.role || "Your role here"}</dd>
+            </div>
+            <div>
+              <dt>Team</dt>
+              <dd>{data.team || "Team details"}</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="tag-list">
+          {data.tags.map((tag) => (
+            <TagPill label={tag} />
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <h2>Overview</h2>
+      <p>
+        {data.summary} Use this space to outline the client challenge, the desired
+        outcomes, and how success was measured.
+      </p>
+    </section>
+
+    <section>
+      <h2>My Contributions</h2>
+      <ul>
+        <li>Describe the core responsibilities you owned across the engagement.</li>
+        <li>Highlight cross-functional collaboration and decision-making touchpoints.</li>
+        <li>Call out leadership moments, experiments, or facilitation efforts.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Architecture & Design</h2>
+      <div class="placeholder-media">
+        <p>Insert architecture diagram or key workflow illustration.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Deep Dives</h2>
+      <div class="deep-dive-grid">
+        <div>
+          <h3>Deep Dive 01</h3>
+          <p>Share a focused narrative about a system, feature, or insight.</p>
+        </div>
+        <div>
+          <h3>Deep Dive 02</h3>
+          <p>Expand on another critical component or research finding.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Results</h2>
+      <p>
+        Summarize measurable outcomes, stakeholder feedback, or growth metrics achieved
+        once the project shipped.
+      </p>
+    </section>
+
+    <section>
+      <h2>Tech Stack</h2>
+      <ul class="tech-list">
+        {data.tech.map((tech) => (
+          <li>{tech}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Next Steps</h2>
+      <p>
+        Outline future iterations, feature opportunities, or recommended follow-up work.
+      </p>
+    </section>
+
+    <section>
+      <h2>Media Gallery</h2>
+      <MediaGallery images={data.images} />
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .case-study {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .case-study-header {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: start;
+  }
+
+  .case-study-header h1 {
+    margin: 0 0 8px;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+  }
+
+  .summary {
+    margin: 0;
+    color: #4a4a4a;
+  }
+
+  .meta-card {
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid #e4e4e4;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .meta-card h2 {
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+  }
+
+  .meta-card dl {
+    margin: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .meta-card div {
+    display: grid;
+    gap: 4px;
+  }
+
+  .meta-card dt {
+    font-weight: 600;
+    color: #6a6a6a;
+  }
+
+  .meta-card dd {
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  section h2 {
+    margin: 0 0 12px;
+    font-size: 1.5rem;
+  }
+
+  .placeholder-media {
+    border: 1px dashed #c0c0c0;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    color: #6a6a6a;
+    background: #fafafa;
+  }
+
+  .deep-dive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .deep-dive-grid h3 {
+    margin: 0 0 8px;
+  }
+
+  .tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tech-list li {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #f1f1f1;
+    font-weight: 500;
+  }
+</style>

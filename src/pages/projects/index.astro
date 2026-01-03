@@ -1,0 +1,140 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+
+const projects = await getCollection("projects");
+const sortedProjects = [...projects].sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const tags = Array.from(
+  new Set(sortedProjects.flatMap((project) => project.data.tags))
+).sort((a, b) => a.localeCompare(b));
+---
+
+<BaseLayout title="Projects" description="Selected case studies and project work.">
+  <section class="content-shell projects-shell">
+    <header class="projects-header">
+      <div>
+        <p class="eyebrow">Projects</p>
+        <h1>Case studies & product work</h1>
+        <p>
+          Explore recent engagements, experimentation, and collaborative builds. Filter by
+          tag to focus on a specific domain or capability.
+        </p>
+      </div>
+      <div class="filter-panel">
+        <span>Filter by tag</span>
+        <div class="filter-buttons" role="group" aria-label="Filter projects by tag">
+          <button type="button" class="filter-button is-active" data-tag-filter data-tag="all" aria-pressed="true">
+            All
+          </button>
+          {tags.map((tag) => (
+            <button type="button" class="filter-button" data-tag-filter data-tag={tag.toLowerCase()} aria-pressed="false">
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    {sortedProjects.length > 0 ? (
+      <div class="projects-grid">
+        {sortedProjects.map((project) => (
+          <ProjectCard
+            title={project.data.title}
+            summary={project.data.summary}
+            tags={project.data.tags}
+            links={project.data.links}
+            caseStudyUrl={`/projects/${project.slug ?? project.data.slug}`}
+            dataTags={project.data.tags.map((tag) => tag.toLowerCase()).join(",")}
+          />
+        ))}
+      </div>
+    ) : (
+      <p>No projects published yet.</p>
+    )}
+  </section>
+</BaseLayout>
+
+<script type="module" src={new URL("../../scripts/project-filters.ts", import.meta.url)}></script>
+
+<style>
+  .projects-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .projects-header {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: end;
+  }
+
+  .projects-header h1 {
+    margin: 0 0 8px;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+  }
+
+  .projects-header p {
+    margin: 0;
+    color: #4a4a4a;
+    max-width: 60ch;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: #6a6a6a;
+    margin: 0 0 8px;
+    font-size: 0.8rem;
+  }
+
+  .filter-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e4e4e4;
+  }
+
+  .filter-panel span {
+    font-weight: 600;
+  }
+
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .filter-button {
+    border: 1px solid #d4d4d4;
+    background: #f7f7f7;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .filter-button:hover,
+  .filter-button.is-active {
+    background: #1c1c1c;
+    color: #ffffff;
+    border-color: #1c1c1c;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+</style>

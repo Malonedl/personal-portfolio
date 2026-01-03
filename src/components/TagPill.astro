@@ -1,0 +1,26 @@
+---
+const { label, tone = "neutral" } = Astro.props;
+
+const toneClass =
+  tone === "accent" ? "tag-pill tag-pill--accent" : "tag-pill";
+---
+
+<span class={toneClass}>{label}</span>
+
+<style>
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: #f1f1f1;
+    color: #2b2b2b;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .tag-pill--accent {
+    background: #1c1c1c;
+    color: #ffffff;
+  }
+</style>
