@@ -1,18 +1,52 @@
 ---
-import '../styles/global.css';
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Placeholder Portfolio</title>
-	</head>
-	<body class="min-h-screen bg-slate-950 text-slate-50">
-		<main class="mx-auto flex min-h-screen max-w-4xl items-center justify-center px-6">
-			<h1 class="text-3xl font-semibold tracking-tight">Placeholder Portfolio</h1>
-		</main>
-	</body>
-</html>
+<BaseLayout title="Placeholder Site" description="A simple landing page with a reusable layout.">
+  <section class="content-shell">
+    <h1>Welcome to the placeholder site</h1>
+    <p>
+      This is a generic introduction area. Use it to describe the site’s purpose and
+      highlight the most important sections.
+    </p>
+    <div class="hero-grid">
+      <div>
+        <h2>Featured Section</h2>
+        <p>
+          Add a short overview of featured work, services, or announcements. Keep the copy
+          concise and adaptable.
+        </p>
+      </div>
+      <div>
+        <h2>Quick Links</h2>
+        <ul>
+          <li>Explore recent projects</li>
+          <li>Review professional experience</li>
+          <li>Read the latest writing</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    max-width: 60ch;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+</style>
