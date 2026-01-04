@@ -1,0 +1,180 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const writingEntries = await getCollection("writing");
+const sortedEntries = writingEntries.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+<BaseLayout
+  title="Writing"
+  description="Writing samples"
+>
+  <section class="content-shell writing-index">
+    <header class="writing-hero">
+      <p class="section-label">Writing</p>
+      <h1>Words &amp; research</h1>
+      <p class="section-lede">
+        A collection of essays, research papers, and writing samples covering various.
+      </p>
+    </header>
+
+    {sortedEntries.length ? (
+      <div class="writing-grid">
+        {sortedEntries.map((entry) => (
+          <article class="writing-card">
+            <div class="card-header">
+              <p class="card-date">
+                {dateFormatter.format(entry.data.date)}
+              </p>
+              <h2>
+                <a href={`/writing/${entry.data.slug}`}>{entry.data.title}</a>
+              </h2>
+            </div>
+            <p class="card-summary">{entry.data.summary}</p>
+            <div class="card-tags">
+              {entry.data.tags.map((tag) => (
+                <span class="tag-pill">{tag}</span>
+              ))}
+            </div>
+            <div class="card-actions">
+              <a class="button" href={`/writing/${entry.data.slug}`}>
+                Read more
+              </a>
+              {entry.data.pdf ? (
+                <a class="button ghost" href={entry.data.pdf}>
+                  PDF
+                </a>
+              ) : null}
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="empty-state">
+        entries will appear here once they are published.
+      </p>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  .writing-index {
+    display: grid;
+    gap: 32px;
+  }
+
+  .writing-hero {
+    display: grid;
+    gap: 12px;
+  }
+
+  .section-label {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6a6a6a;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    margin: 0;
+  }
+
+  .section-lede {
+    max-width: 60ch;
+    color: #454545;
+    margin: 0;
+  }
+
+  .writing-grid {
+    display: grid;
+    gap: 24px;
+  }
+
+  .writing-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 12px 30px rgba(26, 26, 26, 0.06);
+    display: grid;
+    gap: 16px;
+  }
+
+  .card-header {
+    display: grid;
+    gap: 8px;
+  }
+
+  .card-date {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6f6f6f;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  h2 a {
+    text-decoration: none;
+  }
+
+  .card-summary {
+    margin: 0;
+    color: #2d2d2d;
+    max-width: 65ch;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag-pill {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f2f2f2;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+  }
+
+  .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #1c1c1c;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .button.ghost {
+    background: #f4f4f4;
+    color: #1c1c1c;
+  }
+
+  .empty-state {
+    margin: 0;
+    color: #6a6a6a;
+  }
+</style>
