@@ -1,0 +1,126 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const writingEntries = await getCollection("writing");
+  return writingEntries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.summary}>
+  <article class="content-shell writing-detail">
+    <header class="writing-header">
+      <p class="writing-date">{dateFormatter.format(entry.data.date)}</p>
+      <h1>{entry.data.title}</h1>
+      <p class="writing-summary">{entry.data.summary}</p>
+      <div class="tag-row">
+        {entry.data.tags.map((tag) => (
+          <span class="tag-pill">{tag}</span>
+        ))}
+      </div>
+      {entry.data.pdf ? (
+        <a class="button" href={entry.data.pdf}>
+          View PDF
+        </a>
+      ) : null}
+    </header>
+    <div class="writing-body">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .writing-detail {
+    display: grid;
+    gap: 32px;
+  }
+
+  .writing-header {
+    display: grid;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .writing-date {
+    margin: 0;
+    color: #6f6f6f;
+    font-size: 0.95rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  }
+
+  .writing-summary {
+    margin: 0;
+    max-width: 65ch;
+    color: #3a3a3a;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag-pill {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f2f2f2;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+  }
+
+  .button {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #1c1c1c;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .writing-body :global(p) {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #2b2b2b;
+  }
+
+  .writing-body :global(h2) {
+    margin-top: 2rem;
+    font-size: 1.6rem;
+  }
+
+  .writing-body :global(h3) {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+  }
+
+  .writing-body :global(ul) {
+    padding-left: 20px;
+  }
+
+  .writing-body :global(a) {
+    color: #2d6cdf;
+    text-decoration: underline;
+  }
+</style>
