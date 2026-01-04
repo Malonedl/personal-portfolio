@@ -6,10 +6,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "lint": "astro check",
+    "format:check": "astro check"
   },
   "dependencies": {
-    "astro": "^5.16.6"
+    "@astrojs/check": "^0.9.6",
+    "astro": "^5.16.6",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^5.1.0",
