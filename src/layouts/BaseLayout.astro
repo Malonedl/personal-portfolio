@@ -1,10 +1,8 @@
 ---
 import "../styles/global.css";
 
-const {
-  title = "Placeholder Site",
-  description = "personal portfolio.",
-} = Astro.props;
+const { title = "Placeholder Site", description = "personal portfolio." } =
+  Astro.props;
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -15,9 +13,10 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const normalizePath = (path) => {
+const normalizePath = (path: string | undefined) => {
   if (!path) return "/";
-  const trimmed = path.endsWith("/") && path.length > 1 ? path.slice(0, -1) : path;
+  const trimmed =
+    path.endsWith("/") && path.length > 1 ? path.slice(0, -1) : path;
   return trimmed || "/";
 };
 
@@ -41,21 +40,27 @@ const currentPath = normalizePath(Astro.url.pathname);
         <a class="site-title" href="/">Placeholder Site</a>
         <nav class="site-nav" aria-label="Main">
           <ul>
-            {navLinks.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class={
-                    normalizePath(link.href) === currentPath
-                      ? "nav-link is-active"
-                      : "nav-link"
-                  }
-                  aria-current={normalizePath(link.href) === currentPath ? "page" : undefined}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {
+              navLinks.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class={
+                      normalizePath(link.href) === currentPath
+                        ? "nav-link is-active"
+                        : "nav-link"
+                    }
+                    aria-current={
+                      normalizePath(link.href) === currentPath
+                        ? "page"
+                        : undefined
+                    }
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
           </ul>
         </nav>
       </div>
@@ -112,7 +117,12 @@ const currentPath = normalizePath(Astro.url.pathname);
     text-decoration: none;
   }
 
-  :global(a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible) {
+  :global(
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible
+  ) {
     outline: 3px solid #2d6cdf;
     outline-offset: 3px;
   }
@@ -175,7 +185,9 @@ const currentPath = normalizePath(Astro.url.pathname);
     background: transparent;
     color: #2b2b2b;
     font-weight: 500;
-    transition: background 0.2s ease, color 0.2s ease;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
   }
 
   .nav-link:hover {

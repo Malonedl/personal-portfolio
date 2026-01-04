@@ -1,8 +1,8 @@
 const filterButtons = Array.from(
-  document.querySelectorAll<HTMLButtonElement>("[data-tag-filter]")
+  document.querySelectorAll<HTMLButtonElement>("[data-tag-filter]"),
 );
 const projectCards = Array.from(
-  document.querySelectorAll<HTMLElement>("[data-project-card]")
+  document.querySelectorAll<HTMLElement>("[data-project-card]"),
 );
 
 if (filterButtons.length > 0 && projectCards.length > 0) {
@@ -19,7 +19,8 @@ if (filterButtons.length > 0 && projectCards.length > 0) {
 
     projectCards.forEach((card) => {
       const cardTags = (card.dataset.tags ?? "").split(",");
-      const hasTag = normalizedTag === "all" || cardTags.includes(normalizedTag);
+      const hasTag =
+        normalizedTag === "all" || cardTags.includes(normalizedTag);
       if (hasTag) {
         card.dataset.hidden = "false";
       } else {

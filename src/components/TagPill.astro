@@ -1,8 +1,7 @@
 ---
 const { label, tone = "neutral" } = Astro.props;
 
-const toneClass =
-  tone === "accent" ? "tag-pill tag-pill--accent" : "tag-pill";
+const toneClass = tone === "accent" ? "tag-pill tag-pill--accent" : "tag-pill";
 ---
 
 <span class={toneClass}>{label}</span>
