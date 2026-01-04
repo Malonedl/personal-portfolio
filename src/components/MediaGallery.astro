@@ -1,18 +1,22 @@
 ---
-const { images = [] } = Astro.props;
+const { images = [] } = Astro.props as {
+  images?: string[];
+};
 ---
 
-{images.length > 0 ? (
-  <div class="media-gallery">
-    {images.map((image, index) => (
-      <figure>
-        <img src={image} alt={`Project media ${index + 1}`} loading="lazy" />
-      </figure>
-    ))}
-  </div>
-) : (
-  <p class="media-empty">Media coming soon.</p>
-)}
+{
+  images.length > 0 ? (
+    <div class="media-gallery">
+      {images.map((image: string, index: number) => (
+        <figure>
+          <img src={image} alt={`Project media ${index + 1}`} loading="lazy" />
+        </figure>
+      ))}
+    </div>
+  ) : (
+    <p class="media-empty">Media coming soon.</p>
+  )
+}
 
 <style>
   .media-gallery {

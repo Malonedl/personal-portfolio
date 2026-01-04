@@ -2,63 +2,89 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
+import projectFiltersUrl from "../../scripts/project-filters.ts?url";
 
 const projects = await getCollection("projects");
 const sortedProjects = [...projects].sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
 const tags = Array.from(
-  new Set(sortedProjects.flatMap((project) => project.data.tags))
+  new Set(sortedProjects.flatMap((project) => project.data.tags)),
 ).sort((a, b) => a.localeCompare(b));
 ---
 
-<BaseLayout title="Projects" description="Selected case studies and project work.">
+<BaseLayout
+  title="Projects"
+  description="Selected case studies and project work."
+>
   <section class="content-shell projects-shell">
     <header class="projects-header">
       <div>
         <p class="eyebrow">Projects</p>
         <h1>Case studies & product work</h1>
         <p>
-          Explore recent engagements, experimentation, and collaborative builds. Filter by
-          tag to focus on a specific domain or capability.
+          Explore recent engagements, experimentation, and collaborative builds.
+          Filter by tag to focus on a specific domain or capability.
         </p>
       </div>
       <div class="filter-panel">
         <span>Filter by tag</span>
-        <div class="filter-buttons" role="group" aria-label="Filter projects by tag">
-          <button type="button" class="filter-button is-active" data-tag-filter data-tag="all" aria-pressed="true">
+        <div
+          class="filter-buttons"
+          role="group"
+          aria-label="Filter projects by tag"
+        >
+          <button
+            type="button"
+            class="filter-button is-active"
+            data-tag-filter
+            data-tag="all"
+            aria-pressed="true"
+          >
             All
           </button>
-          {tags.map((tag) => (
-            <button type="button" class="filter-button" data-tag-filter data-tag={tag.toLowerCase()} aria-pressed="false">
-              {tag}
-            </button>
-          ))}
+          {
+            tags.map((tag) => (
+              <button
+                type="button"
+                class="filter-button"
+                data-tag-filter
+                data-tag={tag.toLowerCase()}
+                aria-pressed="false"
+              >
+                {tag}
+              </button>
+            ))
+          }
         </div>
       </div>
     </header>
 
-    {sortedProjects.length > 0 ? (
-      <div class="projects-grid">
-        {sortedProjects.map((project) => (
-          <ProjectCard
-            title={project.data.title}
-            summary={project.data.summary}
-            tags={project.data.tags}
-            links={project.data.links}
-            caseStudyUrl={`/projects/${project.slug ?? project.data.slug}`}
-            dataTags={project.data.tags.map((tag) => tag.toLowerCase()).join(",")}
-          />
-        ))}
-      </div>
-    ) : (
-      <p>No projects published yet.</p>
-    )}
+    {
+      sortedProjects.length > 0 ? (
+        <div class="projects-grid">
+          {sortedProjects.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              summary={project.data.summary}
+              tags={project.data.tags}
+              links={project.data.links}
+              caseStudyUrl={`/projects/${project.slug ?? project.data.slug}`}
+              dataTags={project.data.tags
+                .map((tag) => tag.toLowerCase())
+                .join(",")}
+            />
+          ))}
+        </div>
+      ) : (
+        <p>No projects published yet.</p>
+      )
+    }
   </section>
 </BaseLayout>
 
-<script type="module" src={new URL("../../scripts/project-filters.ts", import.meta.url)}></script>
+<script type="module" src={projectFiltersUrl}></script>
 
 <style>
   .projects-shell {
@@ -122,7 +148,10 @@ const tags = Array.from(
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
   }
 
   .filter-button:hover,

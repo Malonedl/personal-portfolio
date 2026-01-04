@@ -26,15 +26,15 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
       <h1>{entry.data.title}</h1>
       <p class="writing-summary">{entry.data.summary}</p>
       <div class="tag-row">
-        {entry.data.tags.map((tag) => (
-          <span class="tag-pill">{tag}</span>
-        ))}
+        {entry.data.tags.map((tag) => <span class="tag-pill">{tag}</span>)}
       </div>
-      {entry.data.pdf ? (
-        <a class="button" href={entry.data.pdf}>
-          View PDF
-        </a>
-      ) : null}
+      {
+        entry.data.pdf ? (
+          <a class="button" href={entry.data.pdf}>
+            View PDF
+          </a>
+        ) : null
+      }
     </header>
     <div class="writing-body">
       <Content />

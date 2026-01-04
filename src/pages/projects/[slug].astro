@@ -49,9 +49,7 @@ const formattedDate = data.date.toLocaleDateString("en-US", {
           </dl>
         </div>
         <div class="tag-list">
-          {data.tags.map((tag) => (
-            <TagPill label={tag} />
-          ))}
+          {data.tags.map((tag) => <TagPill label={tag} />)}
         </div>
       </div>
     </header>
@@ -67,9 +65,16 @@ const formattedDate = data.date.toLocaleDateString("en-US", {
     <section>
       <h2>My Contributions</h2>
       <ul>
-        <li>Describe the core responsibilities you owned across the engagement.</li>
-        <li>Highlight cross-functional collaboration and decision-making touchpoints.</li>
-        <li>Call out leadership moments, experiments, or facilitation efforts.</li>
+        <li>
+          Describe the core responsibilities you owned across the engagement.
+        </li>
+        <li>
+          Highlight cross-functional collaboration and decision-making
+          touchpoints.
+        </li>
+        <li>
+          Call out leadership moments, experiments, or facilitation efforts.
+        </li>
       </ul>
     </section>
 
@@ -97,24 +102,23 @@ const formattedDate = data.date.toLocaleDateString("en-US", {
     <section>
       <h2>Results</h2>
       <p>
-        Summarize measurable outcomes, stakeholder feedback, or growth metrics achieved
-        once the project shipped.
+        Summarize measurable outcomes, stakeholder feedback, or growth metrics
+        achieved once the project shipped.
       </p>
     </section>
 
     <section>
       <h2>Tech Stack</h2>
       <ul class="tech-list">
-        {data.tech.map((tech) => (
-          <li>{tech}</li>
-        ))}
+        {data.tech.map((tech) => <li>{tech}</li>)}
       </ul>
     </section>
 
     <section>
       <h2>Next Steps</h2>
       <p>
-        Outline future iterations, feature opportunities, or recommended follow-up work.
+        Outline future iterations, feature opportunities, or recommended
+        follow-up work.
       </p>
     </section>
 

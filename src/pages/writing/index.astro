@@ -13,55 +13,53 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 });
 ---
 
-<BaseLayout
-  title="Writing"
-  description="Writing samples"
->
+<BaseLayout title="Writing" description="Writing samples">
   <section class="content-shell writing-index">
     <header class="writing-hero">
       <p class="section-label">Writing</p>
       <h1>Words &amp; research</h1>
       <p class="section-lede">
-        A collection of essays, research papers, and writing samples covering various.
+        A collection of essays, research papers, and writing samples covering
+        various.
       </p>
     </header>
 
-    {sortedEntries.length ? (
-      <div class="writing-grid">
-        {sortedEntries.map((entry) => (
-          <article class="writing-card">
-            <div class="card-header">
-              <p class="card-date">
-                {dateFormatter.format(entry.data.date)}
-              </p>
-              <h2>
-                <a href={`/writing/${entry.data.slug}`}>{entry.data.title}</a>
-              </h2>
-            </div>
-            <p class="card-summary">{entry.data.summary}</p>
-            <div class="card-tags">
-              {entry.data.tags.map((tag) => (
-                <span class="tag-pill">{tag}</span>
-              ))}
-            </div>
-            <div class="card-actions">
-              <a class="button" href={`/writing/${entry.data.slug}`}>
-                Read more
-              </a>
-              {entry.data.pdf ? (
-                <a class="button ghost" href={entry.data.pdf}>
-                  PDF
+    {
+      sortedEntries.length ? (
+        <div class="writing-grid">
+          {sortedEntries.map((entry) => (
+            <article class="writing-card">
+              <div class="card-header">
+                <p class="card-date">{dateFormatter.format(entry.data.date)}</p>
+                <h2>
+                  <a href={`/writing/${entry.data.slug}`}>{entry.data.title}</a>
+                </h2>
+              </div>
+              <p class="card-summary">{entry.data.summary}</p>
+              <div class="card-tags">
+                {entry.data.tags.map((tag) => (
+                  <span class="tag-pill">{tag}</span>
+                ))}
+              </div>
+              <div class="card-actions">
+                <a class="button" href={`/writing/${entry.data.slug}`}>
+                  Read more
                 </a>
-              ) : null}
-            </div>
-          </article>
-        ))}
-      </div>
-    ) : (
-      <p class="empty-state">
-        entries will appear here once they are published.
-      </p>
-    )}
+                {entry.data.pdf ? (
+                  <a class="button ghost" href={entry.data.pdf}>
+                    PDF
+                  </a>
+                ) : null}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="empty-state">
+          entries will appear here once they are published.
+        </p>
+      )
+    }
   </section>
 </BaseLayout>
 

@@ -9,17 +9,18 @@
     "astro": "astro",
     "check": "astro check",
     "lint": "astro check",
-    "format:check": "astro check"
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
-    "astro": "^5.16.6",
-    "typescript": "^5.9.3"
+    "astro": "^5.16.6"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^5.1.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.38",
+    "prettier": "^3.7.4",
+    "prettier-plugin-astro": "^0.14.1",
     "tailwindcss": "^3.4.17"
   }
 }
