@@ -1,0 +1,169 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Contact" description="Get in touch via email or social links.">
+  <section class="content-shell contact-shell">
+    <header class="contact-header">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h1>Let’s connect</h1>
+        <p>
+          Reach out with project inquiries, collaborations, or questions. The contact form
+          below is a placeholder and does not send messages.
+        </p>
+      </div>
+      <a class="mailto-button" href="mailto:maloned@tamu.edu">Email maloned@tamu.edu</a>
+    </header>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h2>Find me online</h2>
+        <p>Follow along for updates and case studies.</p>
+        <div class="social-links">
+          <a href="https://github.com/Malonedl" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://github.com/malonedtamu" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/danm97/" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="placeholder-label">Placeholder contact form</div>
+        <form class="contact-form">
+          <label>
+            Name
+            <input type="text" name="name" placeholder="Your name" />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" placeholder="you@example.com" />
+          </label>
+          <label>
+            Message
+            <textarea name="message" rows="4" placeholder="How can I help?"></textarea>
+          </label>
+          <button type="button" disabled>Send message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .contact-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .contact-header h1 {
+    margin: 0 0 8px;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+  }
+
+  .contact-header p {
+    margin: 0;
+    max-width: 60ch;
+    color: #4a4a4a;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: #6a6a6a;
+    margin: 0 0 8px;
+    font-size: 0.8rem;
+  }
+
+  .mailto-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: #1c1c1c;
+    color: #ffffff;
+    font-weight: 600;
+    min-width: 220px;
+    text-align: center;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .contact-card {
+    background: #ffffff;
+    border: 1px solid #e4e4e4;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .social-links a {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #f5f5f5;
+    font-weight: 600;
+  }
+
+  .placeholder-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9a9a9a;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font: inherit;
+  }
+
+  .contact-form button {
+    border: none;
+    border-radius: 999px;
+    padding: 12px 18px;
+    background: #dcdcdc;
+    color: #666666;
+    font-weight: 600;
+    cursor: not-allowed;
+  }
+</style>
